@@ -18,24 +18,6 @@ import requests
 # from googleapiclient.http import MediaFileUpload
 
 
-# Load admin users from the JSON file
-ADMIN_USERS_FILE = 'admin_users.json'
-ADMIN_USERS = []
-if os.path.exists(ADMIN_USERS_FILE):
-    with open(ADMIN_USERS_FILE, 'r') as file:
-        ADMIN_USERS = json.load(file)
-else:
-    print(f"[error] {ADMIN_USERS_FILE} NOT FOUND")
-    sys.exit()
-
-
-# Check if the provided username and password match any admin user
-def is_authenticated(username, password):
-    for admin_user in ADMIN_USERS:
-        if admin_user['username'] == username and hashlib.sha256(admin_user['password'].encode()).hexdigest() == hashlib.sha256(password.encode()).hexdigest():
-            return True
-    return False
-
 # Check if the uploaded file has an allowed extension (customize this list as needed)
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx', 'csv'}

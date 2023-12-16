@@ -1,6 +1,3 @@
-# author: Madhav (https://github.com/madhav-mknc)
-# managing the Pinecone vector database
-
 import os 
 from dotenv import load_dotenv
 load_dotenv()
@@ -28,7 +25,7 @@ pinecone.init(
 index_name = os.environ["PINECONE_INDEX_NAME"]
 print("[+] Index name:\n",index_name)
 
-NAMESPACE = "madhav"
+NAMESPACE = "pdfs"
 print("[+] Namespace:",NAMESPACE)
 
 # connecting to the index
@@ -49,11 +46,7 @@ llm = ChatOpenAI(
 
 # custom prompt
 GENIEPROMPT = """
-You are an assistant you provide accurate and descriptive answers to user questions, after and only researching through the context provided to you.
-You will also use the conversation history provided to you.
 
-Conversation history:
-{history}
 User:
 {question}
 Ai: 
@@ -75,7 +68,7 @@ docsearch = Pinecone.from_existing_index(
 )
 
 # query index
-def get_response(query, chat_history=[]):
+def get_response(query):
     docs = docsearch.similarity_search(
         query=query,
         namespace=NAMESPACE
@@ -85,7 +78,6 @@ def get_response(query, chat_history=[]):
         "input_documents": docs,
         "question": prompt_template.format(
             question=query, 
-            history=chat_history
         )
     }
     

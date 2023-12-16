@@ -1,5 +1,5 @@
-# admin-portal
-Admin dashboard for managing data for AI-chatbot
+# Chat bot
+AI-chatbot
 
 
 # Project Development Details
